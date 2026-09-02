@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Singularity 3D - Buraco Negro & Planeta Terra em Tempo Real</title>
+  <meta name="description" content="Experiência 3D interativa em tempo real com Buraco Negro animado e o Planeta Terra orbitando no espaço profundo.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- 3D Canvas Container -->
+  <div id="canvas-container"></div>
+
+  <!-- Loading Screen Overlay -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loader-content">
+      <div class="cosmic-spinner"></div>
+      <h2 id="loader-title">Carregando Universo 3D...</h2>
+      <div class="progress-bar-bg">
+        <div id="progress-bar" class="progress-bar-fill"></div>
+      </div>
+      <span id="progress-text" class="progress-text">0% (Gerando Buraco Negro, Terra e Órbitas 3D)</span>
+    </div>
+  </div>
+
+  <!-- Header Info Glass Panel -->
+  <header class="glass-header">
+    <div class="header-content">
+      <div class="badge-tag"><span class="pulse-dot"></span> SINGULARITY 3D UNIVERSE</div>
+      <h1>Buraco Negro & Terra 3D</h1>
+      <p>O Planeta Terra orbitando em tempo real ao redor do Buraco Negro no espaço</p>
+    </div>
+  </header>
+
+  <!-- Quick Action Controls (Right Panel) -->
+  <aside class="glass-panel quick-controls">
+    <h3>🎥 Foco de Câmera 3D</h3>
+    <div class="button-group-vertical">
+      <button class="btn-cam active" data-view="front">🎥 Buraco Negro (Frontal)</button>
+      <button class="btn-cam" data-view="earth">🌎 Focar na Terra (Órbita)</button>
+      <button class="btn-cam" data-view="top">🪐 Visão Orbital (45°)</button>
+      <button class="btn-cam" data-view="deep">🌌 Espaço Profundo</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="control-group">
+      <label class="input-label">
+        <span>⚡ Velocidade Cósmica</span>
+        <span id="speed-val" class="val-badge">1.0x</span>
+      </label>
+      <input type="range" id="slider-speed" min="0.1" max="3.0" step="0.1" value="1.0">
+    </div>
+
+    <div class="divider"></div>
+
+    <button class="btn-nav" data-target="projects">
+      <span>🚀</span>
+      <span>Meus Projetos</span>
+    </button>
+    <button class="btn-nav" data-target="skills">
+      <span>⚡</span>
+      <span>Habilidades Tech</span>
+    </button>
+    <button class="btn-nav" data-target="about">
+      <span>📡</span>
+      <span>Sobre Mim / Bio</span>
+    </button>
+  </aside>
+
+  <!-- Performance & Metrics Bottom Bar -->
+  <footer class="glass-panel metrics-footer">
+    <div class="metric-card">
+      <span class="metric-label">Terra 3D Real</span>
+      <span class="metric-value highlight">🌎 Órbita Ativa</span>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric-card">
+      <span class="metric-label">Partículas no Espaço</span>
+      <span class="metric-value green">3.000 Estrelas</span>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric-card">
+      <span class="metric-label">FPS</span>
+      <span id="metric-fps" class="metric-value">60 FPS</span>
+    </div>
+  </footer>
+
+  <!-- MODAL: PROJETOS -->
+  <div id="modal-projects" class="modal-overlay hidden">
+    <div class="glass-modal modal-content">
+      <button class="btn-close-modal">&times;</button>
+      <div class="modal-header">
+        <span class="modal-badge">🚀 PORTFÓLIO & EXPERIÊNCIAS</span>
+        <h2>Projetos em Destaque</h2>
+        <p>Aplicações interativas criadas com tecnologias 3D e web avançada</p>
+      </div>
+      <div class="modal-body project-grid">
+        <div class="project-card">
+          <div class="project-img-placeholder gradient-cosmic">🌌 Singularity 3D</div>
+          <h3>Simulador do Buraco Negro & Terra</h3>
+          <p>Universo 3D real com planeta Terra orbitando o horizonte de eventos com atmosfera e nuvens em tempo real.</p>
+          <div class="tech-tags">
+            <span>Three.js</span><span>PBR Shader</span><span>WebGL</span><span>Vite</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-img-placeholder gradient-lion">🦁 Warrior 3D</div>
+          <h3>Otimizador de Modelos 3D</h3>
+          <p>Ferramenta de redução de peso para arquivos `.glb` com alinhamento estrito de memória para alta velocidade web.</p>
+          <div class="tech-tags">
+            <span>Python</span><span>GLTF 2.0</span><span>PBR</span><span>Draco</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-img-placeholder gradient-cyber">⚡ Cyber Engine</div>
+          <h3>Dashboard 3D Interativo</h3>
+          <p>Interface futurista com gráficos tridimensionais em tempo real e controles cinematográficos.</p>
+          <div class="tech-tags">
+            <span>React</span><span>Three.js</span><span>Node.js</span><span>CSS3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: HABILIDADES -->
+  <div id="modal-skills" class="modal-overlay hidden">
+    <div class="glass-modal modal-content">
+      <button class="btn-close-modal">&times;</button>
+      <div class="modal-header">
+        <span class="modal-badge">⚡ TECNOLOGIAS & FONTES</span>
+        <h2>Habilidades Técnicas</h2>
+        <p>Stack de desenvolvimento para projetos de alto impacto</p>
+      </div>
+      <div class="modal-body skills-container">
+        <div class="skill-category">
+          <h3>🌌 WebGL & Computação Gráfica 3D</h3>
+          <div class="skills-chips">
+            <span class="chip glow">Three.js</span>
+            <span class="chip glow">Planetas 3D & Shaders</span>
+            <span class="chip glow">AnimationMixer</span>
+            <span class="chip">Campo de Partículas 3D</span>
+            <span class="chip">Otimização de Texturas</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>💻 Frontend & Arquitetura Web</h3>
+          <div class="skills-chips">
+            <span class="chip">JavaScript (ES6+)</span>
+            <span class="chip">HTML5 / CSS3</span>
+            <span class="chip">Vite / Bundlers</span>
+            <span class="chip">Design Glassmorphism</span>
+            <span class="chip">UI/UX Futurista</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>🛠️ Ferramentas & Backend</h3>
+          <div class="skills-chips">
+            <span class="chip">Python</span>
+            <span class="chip">Node.js</span>
+            <span class="chip">Git / GitHub</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SOBRE MIM -->
+  <div id="modal-about" class="modal-overlay hidden">
+    <div class="glass-modal modal-content">
+      <button class="btn-close-modal">&times;</button>
+      <div class="modal-header">
+        <span class="modal-badge">📡 BIOGRAFIA CÓSMICA</span>
+        <h2>Sobre Mim</h2>
+        <p>Desenvolvedor focado em gráficos 3D e experiências virtuais imersivas</p>
+      </div>
+      <div class="modal-body bio-container">
+        <p class="bio-lead">
+          Bem-vindo à experiência **Singularity 3D Universe**! Sou um desenvolvedor apaixonado por unir código, design e computação gráfica tridimensional.
+        </p>
+        <p class="bio-text">
+          Especializado na criação de interfaces modernas, animações 3D interativas em tempo real e aplicações com estética futurista.
+        </p>
+        <div class="contact-links">
+          <a href="https://github.com" target="_blank" rel="noopener" class="contact-btn">🐙 Meu GitHub</a>
+          <a href="mailto:contato@exemplo.com" class="contact-btn">✉️ Entrar em Contato</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
