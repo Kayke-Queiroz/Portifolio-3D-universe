@@ -11,11 +11,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/src/styles/style.css">
 </head>
 <body>
   <!-- 3D Canvas Container -->
   <div id="canvas-container"></div>
+
+  <!-- Full-Screen Space Stretch Warp Distortion Overlay -->
+  <div id="warp-overlay" class="warp-overlay hidden"></div>
 
   <!-- Loading Screen Overlay -->
   <div id="loading-overlay" class="loading-overlay">
@@ -29,21 +32,85 @@
     </div>
   </div>
 
-  <!-- Header Info Glass Panel -->
-  <header class="glass-header">
-    <div class="header-content">
-      <div class="badge-tag"><span class="pulse-dot"></span> SINGULARITY 3D UNIVERSE</div>
-      <h1>Buraco Negro & Terra 3D</h1>
-      <p>O Planeta Terra orbitando em tempo real ao redor do Buraco Negro no espaço</p>
+  <!-- Top Glassmorphism Navigation Bar (NAV) -->
+  <nav class="glass-nav">
+    <div class="nav-brand">
+      <div class="badge-tag"><span class="pulse-dot"></span> SINGULARITY 3D</div>
+      <span class="nav-title">Espaço & Naves 3D</span>
     </div>
-  </header>
+
+    <!-- Quick Navigation Links (Camera Focus Controls) -->
+    <div class="nav-links">
+      <button class="nav-link btn-cam active" data-view="front">
+        <span>🌌</span> Buraco Negro
+      </button>
+      <button class="nav-link btn-cam" data-view="earth">
+        <span>🌎</span> Terra 3D
+      </button>
+      <button class="nav-link btn-cam" data-view="ship">
+        <span>🛸</span> Nave UB-65
+      </button>
+      <button class="nav-link btn-cam" data-view="satellite">
+        <span>🛰️</span> Satélite
+      </button>
+      <button class="nav-link btn-cam" data-view="deep">
+        <span>🌌</span> Espaço Profundo
+      </button>
+    </div>
+
+    <!-- Nav Action Modals & Pilot Toggle -->
+    <div class="nav-actions">
+      <button id="btn-pilot-nav" class="btn-pilot">
+        <span>🎮</span>
+        <span>Pilotar UFO</span>
+      </button>
+      <button class="btn-nav" data-target="projects">
+        <span>🚀</span>
+        <span>Projetos</span>
+      </button>
+      <button class="btn-nav" data-target="skills">
+        <span>⚡</span>
+        <span>Habilidades</span>
+      </button>
+      <button class="btn-nav" data-target="about">
+        <span>📡</span>
+        <span>Sobre</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Pilot HUD Controls Banner Overlay -->
+  <div id="pilot-hud" class="pilot-hud glass-panel hidden">
+    <div class="pilot-hud-header">
+      <span class="hud-badge"><span class="pulse-dot red"></span> PILOTO ALIENÍGENA ATIVO</span>
+      <h3>🎮 Controle Manual do Disco UFO</h3>
+    </div>
+    <div id="nitro-badge" class="nitro-badge hidden">⚡ TURBO NITRO ATIVO! 🚀</div>
+    <div class="pilot-controls-info">
+      <div class="key-badge"><span>W</span> / <span>S</span> Acelerar / Ré</div>
+      <div class="key-badge"><span>A</span> / <span>D</span> Girar Esquerda / Direita</div>
+      <div class="key-badge"><span>Q</span> / <span>E</span> Subir / Descer</div>
+      <div class="key-badge"><span>SHIFT</span> Turbo Nitro</div>
+    </div>
+    <button id="btn-exit-pilot" class="btn-exit-pilot">❌ Sair do Piloto (ESC)</button>
+  </div>
 
   <!-- Quick Action Controls (Right Panel) -->
   <aside class="glass-panel quick-controls">
+    <h3>🎮 Controle & Câmera</h3>
+    <button id="btn-pilot-sidebar" class="btn-pilot full-width">
+      <span>🎮</span> Pilotar Nave UFO (WASD)
+    </button>
+
+    <div class="divider"></div>
+
     <h3>🎥 Foco de Câmera 3D</h3>
     <div class="button-group-vertical">
-      <button class="btn-cam active" data-view="front">🎥 Buraco Negro (Frontal)</button>
-      <button class="btn-cam" data-view="earth">🌎 Focar na Terra (Órbita)</button>
+      <button class="btn-cam active" data-view="front">🌌 Buraco Negro (Centro)</button>
+      <button class="btn-cam" data-view="earth">🌎 Planeta Terra (Órbita)</button>
+      <button class="btn-cam" data-view="ship">🛸 Nave UB-65 (Patrulha)</button>
+      <button class="btn-cam" data-view="satellite">🛰️ Satélite Espacial</button>
+      <button class="btn-cam" data-view="ufo">🛸 Disco UFO Scout</button>
       <button class="btn-cam" data-view="top">🪐 Visão Orbital (45°)</button>
       <button class="btn-cam" data-view="deep">🌌 Espaço Profundo</button>
     </div>
@@ -57,32 +124,27 @@
       </label>
       <input type="range" id="slider-speed" min="0.1" max="3.0" step="0.1" value="1.0">
     </div>
-
-    <div class="divider"></div>
-
-    <button class="btn-nav" data-target="projects">
-      <span>🚀</span>
-      <span>Meus Projetos</span>
-    </button>
-    <button class="btn-nav" data-target="skills">
-      <span>⚡</span>
-      <span>Habilidades Tech</span>
-    </button>
-    <button class="btn-nav" data-target="about">
-      <span>📡</span>
-      <span>Sobre Mim / Bio</span>
-    </button>
   </aside>
 
   <!-- Performance & Metrics Bottom Bar -->
   <footer class="glass-panel metrics-footer">
     <div class="metric-card">
-      <span class="metric-label">Terra 3D Real</span>
+      <span class="metric-label">Terra 3D</span>
       <span class="metric-value highlight">🌎 Órbita Ativa</span>
     </div>
     <div class="metric-divider"></div>
     <div class="metric-card">
-      <span class="metric-label">Partículas no Espaço</span>
+      <span class="metric-label">Nave UB-65</span>
+      <span class="metric-value highlight">🛸 Em Patrulha</span>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric-card">
+      <span class="metric-label">Satélite Espacial</span>
+      <span class="metric-value green">🛰️ Sinal 100%</span>
+    </div>
+    <div class="metric-divider"></div>
+    <div class="metric-card">
+      <span class="metric-label">Partículas</span>
       <span class="metric-value green">3.000 Estrelas</span>
     </div>
     <div class="metric-divider"></div>
@@ -196,6 +258,6 @@
     </div>
   </div>
 
-  <script type="module" src="/main.js"></script>
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
